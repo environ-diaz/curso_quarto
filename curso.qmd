@@ -1,0 +1,145 @@
+---
+title: "Usando el sistema de publicación Quarto como una nueva forma de comunicar la ciencia"
+author: "Miguel Equihua, Elio Lagunes"
+format: html
+editor: source
+lightbox: true
+echo: false
+message: false
+warning: false
+error: false
+lang: es
+params:
+  fecha_char: "2025-03-10"
+
+---
+
+```{r}
+library(purrr)
+library(knitr)
+
+fecha = as.Date(params$fecha_char)
+dia = function(x){
+  temp = fecha  |> strftime(format = "%A %d")
+  fecha <<- if (weekdays(fecha + 1) == "sábado") 
+  { fecha + 3 } else { fecha + 1 }
+  return(temp)
+}
+
+fechadora = function(x){
+  src = purrr::map_chr(strsplit(x, "\\n")[[1]], \(criterio) { 
+    knitr::knit_expand(
+      text = c( 
+            "`{r} dia()`: {{ criterio }} <br> "
+            )) 
+  })
+  res <- knitr::knit_child(text = src, quiet = TRUE)
+  cat(res, sep = '\n')
+}
+```
+
+
+
+<b>
+Tipo: Optativo.<br>
+Créditos: 3.<br>
+Horas: 30.<br>
+Horario: 3 horas diarias (10:00-13:00), de lunes a viernes.<br>
+Coordinador: Dr. Miguel Equihua Zamora.<br>
+Profesores: Dr. Miguel Equihua Zamora,  Dr. Elio Guarionex Lagunes Díaz<br>
+</b>
+
+
+El presente curso presenta las numerosas ventajas del sistema de publicación científica y técnica Quarto frente a la tradicional y predominante vía del pdf como medio de comunicación en el ámbito académico. Los estudiantes conocerán como Quarto garantiza la reproducibilidad de los resultados de proyectos de investigación, ya que enlaza las bases de datos, los procesos informáticos, los análisis estadísticos y modelos matemáticos utilizados para llegar a estos resultados. Por otra parte, se presenta como Quarto abre el camino a experiencias comunicativas mucho más enriquecedoras a través de salidas html, haciendo posible la representación de grandes cantidades de información con herramientas interactivas, animaciones y modelos 3D, frente a la limitada capacidad de una gráfica estática. Los estudiantes aprenderán, para facilitar la escritura académica, cómo manejar referencias cruzadas, tablas de contenido y bibliografía, para generar un artículo científico y un póster académico. Para ampliar sus capacidades de comunicación, crearán contenido html, en la forma de presentaciones y entradas para un blog, además de cómo incluir contenido interactivo y cómo usar estilos muy atractivos en sus productos.
+
+
+**Objetivo:** que los participantes tengan un manejo básico que les asista en su producción cotidiana de documentos técnicos y científicos, así como elementos para generar contenido con experiencias html para lograr una comunicación más efectiva y llegar a más público.
+
+**Objetivos específicos:** que los participantes generen entradas html para constituir un blog; que preparen un artículo científico, una presentación, un póster académico y una entrada html con contenido multimedia e interactivo y que hagan uso de mecanismos para automatizar las publicaciones.
+
+**Metodología**
+
+**Evaluación:** Cada módulo se evalúa separadamente y la calificación final del curso es el promedio aritmético de las evaluaciones de cada módulo.
+Los Criterios de Evaluación por Módulo son:
+Módulo I: Dos tareas que se califican por puntos de acuerdo al grado de dificultad de cada ejercicio.
+Módulo II: Una tarea diaria. La escala de calificación del módulo es del 1 al 10.
+Módulo III: Resolución de tareas diarias. La escala de calificación del módulo es del 1 al 10.
+Módulo IV: Resolución de tareas diarias. La escala de calificación del módulo es del 1 al 10
+
+
+# Programa analítico
+
+## Módulo I: Introducción a Quarto y Markdown
+
+### Dr. Miguel Equihua
+5 clases, 3 horas: 15 horas
+
+
+```{r}
+#| output: asis
+
+contenido = "Nuevas formas de comunicar la ciencia; Introducción al entorno Quarto-RStudio.
+Interacción de RStudio con git y Netlify.
+Introducción al html y markdown; encabezados YAML; idiomas; el layout de Quarto.
+Lectura de archivos en R y gráficos básicos.
+Integración de las publicaciones en un blog; temas de bootstrap"
+
+fechadora(contenido)
+
+```
+
+
+## Módulo II: Publicación académica con Quarto
+
+### Dr. Miguel Equihua
+5 clases, 3 horas: 15 horas
+
+```{r}
+#| output: asis
+
+contenido = "Referencias cruzadas; Archivos acompañantes: css, js, bibtex; principales clases css/html, archivos csl para estilo de referencias.
+Renderizado de documentos en pdf con Typst.
+Parámetros de ejecución de las secciones de código.
+Presentaciónes con reveal.js: diapositivas, títulos, efectos."
+
+fechadora(contenido)
+
+```
+
+
+## Módulo III: Creación de pósters académicos y reportes parametrizados
+
+### Dr. Elio Guarionex Lagunes Díaz
+3 clases, 3 horas: 9 horas
+
+
+```{r}
+#| output: asis
+
+contenido = "Creación de un póster académico en typst.
+Reportes parametrizados a partir de un script auxiliar.
+Creación automatizada de gráficos y secciones a partir de una base de datos"
+
+
+fechadora(contenido)
+
+```
+
+
+## Módulo IV: Proyecto
+
+### Dr. Miguel Equihua y Dr. Elio Guarionex Lagunes Díaz
+2 clases, 3 horas: 6 horas
+
+
+```{r}
+#| output: asis
+
+contenido = "Asistencia en creación de un proyecto propio usando lo aprendido en el curso.
+Renderizado final de un proyecto propio."
+
+
+fechadora(contenido)
+
+```
+
